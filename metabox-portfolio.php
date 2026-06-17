@@ -297,6 +297,56 @@ function rs_register_project_feature_metabox() {
 	) );
 }
 
+// Pricing Option
+add_action( 'cmb2_admin_init', 'rs_register_pricing_option_metabox' );
+
+function rs_register_pricing_option_metabox() {
+	$pricing = new_cmb2_box( array(
+		'id'           => 'rs_pricing_option_metabox',
+		'title'        => esc_html__( 'Pricing Option', 'rstheme-portfolio-post' ),
+		'object_types' => array( 'portfolios' ),
+	) );
+
+	$group_field_id = $pricing->add_field( array(
+		'id'          => 'pricing_options',
+		'type'        => 'group',
+		'options'     => array(
+			'group_title'   => esc_html__( 'Pricing Option {#}', 'rstheme-portfolio-post' ),
+			'add_button'    => esc_html__( 'Add Another Option', 'rstheme-portfolio-post' ),
+			'remove_button' => esc_html__( 'Remove Option', 'rstheme-portfolio-post' ),
+			'sortable'      => true,
+		),
+	) );
+
+	$pricing->add_group_field( $group_field_id, array(
+		'name' => esc_html__( 'Title', 'rstheme-portfolio-post' ),
+		'id'   => 'title',
+		'type' => 'text',
+	) );
+
+	$pricing->add_group_field( $group_field_id, array(
+		'name'       => esc_html__( 'Price', 'rstheme-portfolio-post' ),
+		'id'         => 'price',
+		'type'       => 'text',
+		'attributes' => array(
+			'type' => 'number',
+		),
+	) );
+
+	$pricing->add_group_field( $group_field_id, array(
+		'name' => esc_html__( 'Feature', 'rstheme-portfolio-post' ),
+		'desc' => esc_html__( 'Add each feature on a new line.', 'rstheme-portfolio-post' ),
+		'id'   => 'feature',
+		'type' => 'textarea',
+	) );
+
+	$pricing->add_group_field( $group_field_id, array(
+		'name' => esc_html__( 'Link', 'rstheme-portfolio-post' ),
+		'id'   => 'link',
+		'type' => 'text',
+	) );
+}
+
 // Project Changelog
 add_action( 'cmb2_admin_init', 'rs_register_project_changelog_metabox' );
 

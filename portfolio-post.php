@@ -70,3 +70,18 @@ function tr_create_portfolio() {
 
 add_image_size( 'rs_portfolio-slider', 600, 360, true );
 
+add_action( 'admin_enqueue_scripts', 'rs_enqueue_admin_scripts' );
+
+function rs_enqueue_admin_scripts( $hook ) {
+	global $post;
+	if ( ( 'post.php' === $hook || 'post-new.php' === $hook ) && isset( $post ) && 'portfolios' === $post->post_type ) {
+		wp_enqueue_script(
+			'rs-admin-group-duplicate',
+			plugin_dir_url( __FILE__ ) . 'assets/js/admin-group-duplicate.js',
+			array( 'jquery' ),
+			'1.0.0',
+			true
+		);
+	}
+}
+
