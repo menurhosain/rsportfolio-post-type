@@ -104,6 +104,32 @@ function rs_register_project_info_metabox() {
 	) );
 
 	$project_info->add_field( array(
+		'name'             => esc_html__( 'Product Source', 'rstheme-portfolio-post' ),
+		'desc'             => esc_html__( 'Where is this product sold?', 'rstheme-portfolio-post' ),
+		'id'               => 'product_source',
+		'type'             => 'select',
+		'show_option_none' => false,
+		'default'          => 'rstheme',
+		'options'          => array(
+			'themeforest' => esc_html__( 'ThemeForest', 'rstheme-portfolio-post' ),
+			'rstheme'     => esc_html__( 'RSTheme', 'rstheme-portfolio-post' ),
+		),
+	) );
+
+	$project_info->add_field( array(
+		'name'             => esc_html__( 'Linked EDD Product', 'rstheme-portfolio-post' ),
+		'desc'             => esc_html__( 'Select the EDD download linked to this portfolio item.', 'rstheme-portfolio-post' ),
+		'id'               => 'edd_p_id',
+		'type'             => 'select',
+		'show_option_none' => esc_html__( '— Select a Download —', 'rstheme-portfolio-post' ),
+		'options_cb'       => 'rs_portfolio_get_edd_downloads',
+		'attributes'       => array(
+			'data-conditional-id'    => 'product_source',
+			'data-conditional-value' => 'rstheme',
+		),
+	) );
+
+	$project_info->add_field( array(
 		'name'             => esc_html__( 'Product Types', 'rstheme-portfolio-post' ),
 		'desc'             => esc_html__( 'Choose your product type', 'rstheme-portfolio-post' ),
 		'id'               => 'type_select',
@@ -112,6 +138,10 @@ function rs_register_project_info_metabox() {
 		'options'          => array(
 			'option1' => esc_html__( 'Free', 'rstheme-portfolio-post' ),
 			'option2' => esc_html__( 'Commercial', 'rstheme-portfolio-post' ),
+		),
+		'attributes'       => array(
+			'data-conditional-id'    => 'product_source',
+			'data-conditional-value' => 'themeforest',
 		),
 	) );
 
@@ -123,17 +153,14 @@ function rs_register_project_info_metabox() {
 	) );
 
 	$project_info->add_field( array(
-		'name' => esc_html__( 'Product ID', 'rstheme-portfolio-post' ),
-		'desc' => esc_html__( 'Add Themeforest Product ID', 'rstheme-portfolio-post' ),
-		'id'   => 'p_id',
-		'type' => 'text_medium',
-	) );
-
-	$project_info->add_field( array(
-		'name' => esc_html__( 'Project Title', 'rstheme-portfolio-post' ),
-		'desc' => esc_html__( 'Add Project Title', 'rstheme-portfolio-post' ),
-		'id'   => 'p_title',
-		'type' => 'text_medium',
+		'name'       => esc_html__( 'ThemeForest Product ID', 'rstheme-portfolio-post' ),
+		'desc'       => esc_html__( 'Add ThemeForest Product ID', 'rstheme-portfolio-post' ),
+		'id'         => 'p_id',
+		'type'       => 'text_medium',
+		'attributes' => array(
+			'data-conditional-id'    => 'product_source',
+			'data-conditional-value' => 'themeforest',
+		),
 	) );
 
 	$project_info->add_field( array(
@@ -155,6 +182,23 @@ function rs_register_project_info_metabox() {
 		'desc' => esc_html__( 'Add total sale number', 'rstheme-portfolio-post' ),
 		'id'   => 'total_sale',
 		'type' => 'text_medium',
+		'attributes'       => array(
+			'data-conditional-id'    => 'product_source',
+			'data-conditional-value' => 'themeforest',
+		),
+	) );
+
+	$project_info->add_field( array(
+		'name'       => esc_html__( 'Review Count (Fake)', 'rstheme-portfolio-post' ),
+		'desc'       => esc_html__( 'Rating value between 0 and 5 (e.g. 1, 1.5, 2, 2.5 ...)', 'rstheme-portfolio-post' ),
+		'id'         => 'review_count',
+		'type'       => 'text',
+		'attributes' => array(
+			'type' => 'number',
+			'min'  => '0',
+			'max'  => '5',
+			'step' => '0.5',
+		),
 	) );
 
 	$project_info->add_field( array(
@@ -254,6 +298,27 @@ function rs_register_project_info_metabox() {
 		'id'   => 'sidebar_feature',
 		'type' => 'textarea',
 	) );
+}
+
+function rs_portfolio_get_edd_downloads() {
+	if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+		return [ '' => esc_html__( 'EDD not active', 'rstheme-portfolio-post' ) ];
+	}
+
+	$downloads = get_posts( [
+		'post_type'      => 'download',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'orderby'        => 'title',
+		'order'          => 'ASC',
+	] );
+
+	$options = [];
+	foreach ( $downloads as $download ) {
+		$options[ $download->ID ] = $download->post_title;
+	}
+
+	return $options;
 }
 
 // Project Short Description
