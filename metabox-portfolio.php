@@ -123,10 +123,10 @@ function rs_register_project_info_metabox() {
 		'type'             => 'select',
 		'show_option_none' => esc_html__( '— Select a Download —', 'rstheme-portfolio-post' ),
 		'options_cb'       => 'rs_portfolio_get_edd_downloads',
-		'attributes'       => array(
-			'data-conditional-id'    => 'product_source',
-			'data-conditional-value' => 'rstheme',
-		),
+		// 'attributes'       => array(
+		// 	'data-conditional-id'    => 'product_source',
+		// 	'data-conditional-value' => 'rstheme',
+		// ),
 	) );
 
 	$project_info->add_field( array(
@@ -139,10 +139,10 @@ function rs_register_project_info_metabox() {
 			'option1' => esc_html__( 'Free', 'rstheme-portfolio-post' ),
 			'option2' => esc_html__( 'Commercial', 'rstheme-portfolio-post' ),
 		),
-		'attributes'       => array(
-			'data-conditional-id'    => 'product_source',
-			'data-conditional-value' => 'themeforest',
-		),
+		// 'attributes'       => array(
+		// 	'data-conditional-id'    => 'product_source',
+		// 	'data-conditional-value' => 'themeforest',
+		// ),
 	) );
 
 	$project_info->add_field( array(
@@ -157,10 +157,10 @@ function rs_register_project_info_metabox() {
 		'desc'       => esc_html__( 'Add ThemeForest Product ID', 'rstheme-portfolio-post' ),
 		'id'         => 'p_id',
 		'type'       => 'text_medium',
-		'attributes' => array(
-			'data-conditional-id'    => 'product_source',
-			'data-conditional-value' => 'themeforest',
-		),
+		// 'attributes' => array(
+		// 	'data-conditional-id'    => 'product_source',
+		// 	'data-conditional-value' => 'themeforest',
+		// ),
 	) );
 
 	$project_info->add_field( array(
@@ -182,10 +182,10 @@ function rs_register_project_info_metabox() {
 		'desc' => esc_html__( 'Add total sale number', 'rstheme-portfolio-post' ),
 		'id'   => 'total_sale',
 		'type' => 'text_medium',
-		'attributes'       => array(
-			'data-conditional-id'    => 'product_source',
-			'data-conditional-value' => 'themeforest',
-		),
+		// 'attributes'       => array(
+		// 	'data-conditional-id'    => 'product_source',
+		// 	'data-conditional-value' => 'themeforest',
+		// ),
 	) );
 
 	$project_info->add_field( array(
