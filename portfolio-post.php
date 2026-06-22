@@ -70,6 +70,25 @@ function tr_create_portfolio() {
 
 add_image_size( 'rs_portfolio-slider', 600, 360, true );
 
+add_action( 'wp_enqueue_scripts', 'rs_portfolio_enqueue_fluent_form_styles' );
+
+function rs_portfolio_enqueue_fluent_form_styles() {
+	wp_enqueue_style(
+		'rsportfolio-fluent-form-custom',
+		plugin_dir_url( __FILE__ ) . 'widgets/fluent-form/fluent-form-custom.css'
+	);
+}
+
+add_action( 'elementor/widgets/register', 'rs_portfolio_register_fluent_form_widget' );
+
+function rs_portfolio_register_fluent_form_widget( $widgets_manager ) {
+	if ( ! class_exists( '\FluentForm\App\Helpers\Helper' ) ) {
+		return;
+	}
+	require_once plugin_dir_path( __FILE__ ) . 'widgets/fluent-form/FluentFormWidget.php';
+	$widgets_manager->register( new \rs__FluentFormWidget() );
+}
+
 add_action( 'admin_enqueue_scripts', 'rs_enqueue_admin_scripts' );
 
 function rs_enqueue_admin_scripts( $hook ) {
