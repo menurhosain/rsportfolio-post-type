@@ -412,6 +412,38 @@ function rs_register_pricing_option_metabox() {
 	) );
 }
 
+// Preview Link
+add_action( 'cmb2_admin_init', 'rs_register_preview_link_metabox' );
+
+function rs_register_preview_link_metabox() {
+	$preview_link = new_cmb2_box( array(
+		'id'           => 'rs_preview_link_metabox',
+		'title'        => esc_html__( 'Preview Link', 'rstheme-portfolio-post' ),
+		'object_types' => array( 'portfolios' ),
+	) );
+
+	$preview_link->add_field( array(
+		'name' => esc_html__( 'Enable Preview', 'rstheme-portfolio-post' ),
+		'desc' => esc_html__( 'Toggle to enable the preview section', 'rstheme-portfolio-post' ),
+		'id'   => 'enable_preview',
+		'type' => 'checkbox',
+	) );
+
+	$preview_link->add_field( array(
+		'name' => esc_html__( 'Preview Link', 'rstheme-portfolio-post' ),
+		'desc' => esc_html__( 'Add the preview link URL', 'rstheme-portfolio-post' ),
+		'id'   => 'preview_link',
+		'type' => 'text_medium',
+	) );
+
+	$preview_link->add_field( array(
+		'name' => esc_html__( 'Purchase Now Link', 'rstheme-portfolio-post' ),
+		'desc' => esc_html__( 'Add the purchase now link URL', 'rstheme-portfolio-post' ),
+		'id'   => 'purchase_now_link',
+		'type' => 'text_medium',
+	) );
+}
+
 // Project Changelog
 add_action( 'cmb2_admin_init', 'rs_register_project_changelog_metabox' );
 
